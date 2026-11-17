@@ -1,0 +1,244 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Private user identity profile stored per authenticated Firebase user",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "displayName": {
+          "type": "string",
+          "maxLength": 120
+        },
+        "email": {
+          "type": "string",
+          "maxLength": 320
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["uid", "displayName", "email", "createdAt", "updatedAt"]
+    },
+    "WorkspacePreferences": {
+      "title": "WorkspacePreferences",
+      "description": "Synced workspace UI and behavior preferences (under 64 KB cap)",
+      "type": "object",
+      "properties": {
+        "ownerId": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "isDark": { "type": "boolean" },
+        "sendOnEnter": { "type": "boolean" },
+        "autoScroll": { "type": "boolean" },
+        "language": {
+          "type": "string",
+          "maxLength": 40
+        },
+        "density": {
+          "type": "string",
+          "enum": ["comfortable", "compact"]
+        },
+        "fontScale": {
+          "type": "string",
+          "enum": ["default", "large"]
+        },
+        "completionChime": { "type": "boolean" },
+        "spokenStatusUpdates": { "type": "boolean" },
+        "voiceAutoSubmit": { "type": "boolean" },
+        "soundProfile": {
+          "type": "string",
+          "enum": ["chime", "click", "muted"]
+        },
+        "volume": { "type": "number" },
+        "betaTraces": { "type": "boolean" },
+        "betaSelectionBar": { "type": "boolean" },
+        "betaVoiceWave": { "type": "boolean" },
+        "betaCommandSearch": { "type": "boolean" },
+        "localModelEnabled": { "type": "boolean" },
+        "localModelReady": { "type": "boolean" },
+        "localBackend": {
+          "type": "string",
+          "enum": ["webgpu", "cpu"]
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["ownerId", "isDark", "sendOnEnter", "autoScroll", "language", "updatedAt"]
+    },
+    "ChatThreadDoc": {
+      "title": "ChatThreadDoc",
+      "description": "Conversation thread metadata owned by a signed-in user",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "ownerId": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "title": {
+          "type": "string",
+          "maxLength": 160
+        },
+        "updatedAtLabel": {
+          "type": "string",
+          "maxLength": 40
+        },
+        "pinned": {
+          "type": "boolean"
+        },
+        "folderId": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["id", "ownerId", "title", "updatedAtLabel", "createdAt", "updatedAt"]
+    },
+    "ChatFolderDoc": {
+      "title": "ChatFolderDoc",
+      "description": "User chat folder for organizing threads",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "ownerId": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "name": {
+          "type": "string",
+          "maxLength": 80
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["id", "ownerId", "name", "createdAt", "updatedAt"]
+    },
+    "ChatMessageDoc": {
+      "title": "ChatMessageDoc",
+      "description": "Individual message inside a user's conversation thread",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "ownerId": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "threadId": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "orderIndex": { "type": "number" },
+        "role": {
+          "type": "string",
+          "enum": ["user", "assistant"]
+        },
+        "content": {
+          "type": "string",
+          "maxLength": 200000
+        },
+        "model": {
+          "type": "string",
+          "maxLength": 80
+        },
+        "effort": {
+          "type": "string",
+          "maxLength": 40
+        },
+        "thinkingVariant": {
+          "type": "string",
+          "enum": ["Steps", "Reasoning", "Search", "Coding"]
+        },
+        "thinkingLines": {
+          "type": "array",
+          "description": "Execution trace lines for the assistant message (max 20 items)"
+        },
+        "reasoningText": {
+          "type": "string",
+          "maxLength": 150000
+        },
+        "thinkingDurationMs": {
+          "type": "number"
+        },
+        "timestamp": {
+          "type": "string",
+          "maxLength": 32
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["id", "ownerId", "threadId", "orderIndex", "role", "content", "timestamp", "createdAt", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}/private/{docId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "Owner-only PII profile data"
+    },
+    "/users/{userId}/settings/{settingId}": {
+      "schema": { "$ref": "#/entities/WorkspacePreferences" },
+      "description": "Synced Nexora workspace preferences"
+    },
+    "/users/{userId}/threads/{threadId}": {
+      "schema": { "$ref": "#/entities/ChatThreadDoc" },
+      "description": "User chat threads"
+    },
+    "/users/{userId}/folders/{folderId}": {
+      "schema": { "$ref": "#/entities/ChatFolderDoc" },
+      "description": "User chat organization folders"
+    },
+    "/users/{userId}/threads/{threadId}/messages/{messageId}": {
+      "schema": { "$ref": "#/entities/ChatMessageDoc" },
+      "description": "Messages belonging to a thread, gated by parent thread ownership"
+    }
+  }
+}

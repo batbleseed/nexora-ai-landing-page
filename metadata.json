@@ -1,0 +1,8 @@
+{
+  "name": "nexora ai landing page",
+  "description": "A minimal, interactive AI workspace shell featuring an expandable multimodal prompt composer.",
+  "requestFramePermissions": [
+    "microphone"
+  ],
+  "majorCapabilities": []
+}
